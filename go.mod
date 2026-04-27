@@ -11,3 +11,6 @@ require (
 )
 
 require golang.org/x/sync v0.6.0 // indirect
+
+// Personal fork for learning purposes.
+// Tracking upstream: jackc/pgx @ v5

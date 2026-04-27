@@ -53,13 +53,13 @@ type BuildFrontendFunc func(r interface{}, w interface{}) interface{}
 
 // PgConn is a low-level PostgreSQL connection handle. It is not safe for concurrent usage.
 type PgConn struct {
-	conn          net.Conn
-	pid           uint32 // backend pid
-	secretKey     uint32 // key to use to send a cancel query message to the server
+	conn              net.Conn
+	pid               uint32 // backend pid
+	secretKey         uint32 // key to use to send a cancel query message to the server
 	parameterStatuses map[string]string // parameters that have been reported by the server
-	txStatus      byte
-	closed        bool
-	config        *Config
+	txStatus          byte
+	closed            bool
+	config            *Config
 }
 
 // Connect establishes a connection to a PostgreSQL server using the environment
@@ -78,45 +78,7 @@ func ConnectConfig(ctx context.Context, config *Config) (*PgConn, error) {
 	// Simplistic initial implementation — full dial logic, TLS negotiation,
 	// and auth would be added in subsequent commits.
 	if config == nil {
-		return nil, fmt.Errorf("pgconn: config must not be nil")
+		return nil, fmt.Errorf("config must not be nil")
 	}
-
-	pgConn := &PgConn{
-		config:            config,
-		parameterStatuses: make(map[string]string),
-	}
-
-	_ = pgConn // suppress unused warning until dial logic is wired up
-
-	return nil, fmt.Errorf("pgconn: ConnectConfig not yet fully implemented")
-}
-
-// Close closes a connection. It is safe to call Close on a already closed connection.
-func (c *PgConn) Close(ctx context.Context) error {
-	if c.closed {
-		return nil
-	}
-	c.closed = true
-	if c.conn != nil {
-		return c.conn.Close()
-	}
-	return nil
-}
-
-// IsClosed reports if the connection has been closed.
-func (c *PgConn) IsClosed() bool {
-	return c.closed
-}
-
-// ParameterStatus returns the value of a parameter reported by the server (e.g.
-// server_version). Returns an empty string for unknown parameters.
-func (c *PgConn) ParameterStatus(key string) string {
-	return c.parameterStatuses[key]
-}
-
-// TxStatus returns the current transaction status as reported by the server.
-// 'I' for idle (not in a transaction block), 'T' for in a transaction block,
-// and 'E' for in a failed transaction block.
-func (c *PgConn) TxStatus() byte {
-	return c.txStatus
+	return nil, fmt.Errorf("ConnectConfig not yet implemented")
 }

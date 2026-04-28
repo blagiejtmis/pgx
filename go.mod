@@ -14,3 +14,8 @@ require golang.org/x/sync v0.6.0 // indirect
 
 // Personal fork for learning purposes.
 // Tracking upstream: jackc/pgx @ v5
+//
+// Notes:
+//   - Studying connection pool behavior (puddle/v2)
+//   - Exploring pgpassfile auth flow
+//   - TODO: experiment with custom query tracing hooks
